@@ -3,6 +3,7 @@ package org.example;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class MadLibs {
 
@@ -14,7 +15,8 @@ public class MadLibs {
                                   String randomAdjective4, String randomAdjective5,
                                   String randomPluralNoun1, String randomPluralNoun2,
                                   String randomPluralNoun3, String randomPluralNoun4,
-                                  String randomPluralNoun5, Scanner scanner) {
+                                  String randomPluralNoun5, Scanner scanner)
+            throws InterruptedException {
 
         System.out.println("Before I tell you a story, I need to ask you a couple more questions:");
         System.out.println();
@@ -52,25 +54,40 @@ public class MadLibs {
         }
 
         System.out.println();
-        System.out.println("Ok! I think we are ready for the story! Here goes!... Ahem. This " +
+        System.out.println("Ok! I think we are ready for the story! Here goes!... Ahem....");
+        TimeUnit.SECONDS.sleep(5);
+
+        System.out.println("This " +
                 "story is " +
                 "called, 'The Garage Band'");
         System.out.println("By Yours Truly (that's me!)");
-        System.out.println();
+        TimeUnit.SECONDS.sleep(5);
+        System.out.println("Ahem...");
+        TimeUnit.SECONDS.sleep(2);
+
         System.out.println(
                 "Dad plays a(n) " + randomAdjective1 + " piano. A(n) " + randomAdjective2 +
                         " musician, he's equally at home with rock 'n' " + randomVerb1 +
                         " as he is with classical " + randomNoun1 + ".");
+        TimeUnit.SECONDS.sleep(3);
+
         System.out.println("Mom has a remarkable " + verbEndingInING + " voice and was the lead " +
                 randomNoun2 + " in her college choir.  She never failed to hit a(n) " +
                 randomAdjective2 + " note.");
+        TimeUnit.SECONDS.sleep(3);
+
         System.out.println("Music flows through our family's " + randomPluralNoun1 + " - with the" +
                 " exception of Cousin Joel, who doesn't have a(n) " + randomAdjective3 + " ear " +
                 "for music and can't carry a(n) " + randomNoun3 + ".");
+        TimeUnit.SECONDS.sleep(3);
+
+
         System.out.println("But believe it or not, he just formed a garage band. They are called " +
                 "the " + sillyWord + " " + randomPluralNoun2 + ".");
         System.out.println("Fortunately, Joel's only the " + randomAdjective4 + " manager. Three " +
                 "of our other cousins make up the " + randomAdjective5 + " band.");
+        TimeUnit.SECONDS.sleep(3);
+
         System.out.println(personInTheRoom1 + " plays guitar, " + personInTheRoom2 + " plays " +
                 "bass, and " + personInTheRoom3 + " plays the " + randomPluralNoun4 + ".");
         System.out.println("It's been only three weeks since they got together and they've " +
@@ -128,7 +145,7 @@ public class MadLibs {
 
         // Check if the list is not empty and has enough elements
         if (array == null || array.size() < numElements) {
-            System.out.println("The array does not have enough elements.");
+            System.out.println("The array does not have enough elements. Please start over.");
             return randomElements;
         }
 
@@ -149,20 +166,24 @@ public class MadLibs {
         ArrayList<String> adjectivesArray = new ArrayList<>();
         ArrayList<String> pluralNounsArray = new ArrayList<>();
 
-        collectNouns(scanner, nounsArray);
-        collectVerbs(scanner, verbsArray);
-        collectAdjectives(scanner, adjectivesArray);
-        collectPluralNouns(scanner, pluralNounsArray);
+        try {
+            collectNouns(scanner, nounsArray);
+            collectVerbs(scanner, verbsArray);
+            collectAdjectives(scanner, adjectivesArray);
+            collectPluralNouns(scanner, pluralNounsArray);
 
-        String[] randomNouns = generateRandomElements(nounsArray);
-        String[] randomVerbs = generateRandomElements(verbsArray);
-        String[] randomAdjectives = generateRandomElements(adjectivesArray);
-        String[] randomPluralNouns = generateRandomElements(pluralNounsArray);
+            String[] randomNouns = generateRandomElements(nounsArray);
+            String[] randomVerbs = generateRandomElements(verbsArray);
+            String[] randomAdjectives = generateRandomElements(adjectivesArray);
+            String[] randomPluralNouns = generateRandomElements(pluralNounsArray);
 
-        tellStory(randomVerbs[0], randomVerbs[1], randomVerbs[2], randomVerbs[3], randomVerbs[4],
-                randomNouns[0], randomNouns[1], randomNouns[2], randomNouns[3], randomNouns[4],
-                randomAdjectives[0], randomAdjectives[1], randomAdjectives[2], randomAdjectives[3],
-                randomAdjectives[4], randomPluralNouns[0], randomPluralNouns[1], randomPluralNouns[2],
-                randomPluralNouns[3], randomPluralNouns[4], scanner);
+            tellStory(randomVerbs[0], randomVerbs[1], randomVerbs[2], randomVerbs[3], randomVerbs[4],
+                    randomNouns[0], randomNouns[1], randomNouns[2], randomNouns[3], randomNouns[4],
+                    randomAdjectives[0], randomAdjectives[1], randomAdjectives[2], randomAdjectives[3],
+                    randomAdjectives[4], randomPluralNouns[0], randomPluralNouns[1], randomPluralNouns[2],
+                    randomPluralNouns[3], randomPluralNouns[4], scanner);
+        } catch (InterruptedException e) {
+            System.out.println("The story was interrupted: " + e.getMessage());
+        }
     }
 }
